@@ -1,67 +1,95 @@
-import React, { useState, useEffect } from 'react';
-import { fetchDailyData } from '../../api';
-import { Line, Bar } from 'react-chartjs-2';
-import styles from './Chart.module.css'
+import React, { useState, useEffect } from "react";
+import { fetchDailyData } from "../../api";
+import styles from "./Chart.module.css";
+import ReactApexChart from "react-apexcharts";
+import ApxBar from "./ChartApx";
 
 const Chart = ({ data: { confirmed, recovered, deaths }, country }) => {
   const [dailyData, setDailyData] = useState([]);
+
   useEffect(() => {
     const fetchAPI = async () => {
       setDailyData(await fetchDailyData());
-    }
+    };
     fetchAPI();
   }, []);
 
-  const lineChart = (
-    dailyData.length ? (
-      <Line
-        data={{
-          labels: dailyData.map(({ date }) => date),
-          datasets: [{
-            data: dailyData.map(({ confirmed }) => confirmed),
-            label: 'Infected',
-            borderColor: '#333fff',
-            backgroundColor: 'rgba(51, 63, 255, 0.25)',
-            fill: true
-          }, {
-            data: dailyData.map(({ deaths }) => deaths),
-            label: 'Deaths',
-            borderColor: 'red',
-            backgroundColor: 'rgba(255, 0, 0, 0.5)',
-            fill: true
-          }],
-        }}
-      />) : null
-  );
+  let dConf;
+  let dDeath;
+  if (dailyData.length) {
+    dConf = dailyData.map(({ date, confirmed }) => ({
+      x: date,
+      y: confirmed,
+    }));
+    dDeath = dailyData.map(({ date, deaths }) => ({ x: date, y: deaths }));
+  }
 
-  const barChart = (
-    confirmed
-      ? (
-        <Bar
-          data={{
-            labels: ['Infected', 'Recovered', 'Deaths'],
-            datasets: [{
-              label: 'People',
-              backgroundColor: [
-                'rgba(0, 0, 255, 0.5)',
-                'rgba(0, 255, 0, 0.5)',
-                'rgba(255, 0, 0, 0.5)'],
-              data: [confirmed.value, recovered.value, deaths.value]
-            }]
-          }}
-          options={{
-            legend: { display: false },
-            title: { display: true, text: `Current state in ${country}` }
-          }}
-        />
-      ) : null
-  );
+  const series = [
+    {
+      name: "Confirmed",
+      data: dConf,
+    },
+    {
+      name: "Deaths",
+      data: dDeath,
+    },
+  ];
+
+  const options = {
+    chart: {
+      type: "area",
+      stacked: true,
+    },
+    colors: ["rgba(54, 162, 235, 0.8)", "rgba(255, 99, 132, 0.8)"],
+    dataLabels: { enabled: false },
+    stroke: {
+      curve: "straight",
+    },
+    fill: {
+      type: "gradient",
+      gradient: {
+        opacityFrom: 0.6,
+        opacityTo: 0.8,
+      },
+    },
+    legend: {
+      position: "top",
+      horizontalAlign: "left",
+    },
+    xaxis: {
+      type: "datetime",
+    },
+    tooltip: {
+      x: {
+        format: "dd/MM/yy",
+      },
+    },
+  };
+
+  const mahChart = dailyData.length ? (
+    <ReactApexChart
+      options={options}
+      series={series}
+      type="area"
+      height={650}
+      width={1280}
+    />
+  ) : null;
 
   return (
     <div className={styles.container}>
-      {country ? barChart : lineChart}
+      {country ? (
+        <ApxBar
+          confirmed={confirmed}
+          recovered={recovered}
+          deaths={deaths}
+          country={country}
+        />
+      ) : (
+        mahChart
+      )}
     </div>
-  )
-}
+  );
+};
 
 export default Chart;
