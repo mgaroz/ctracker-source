@@ -26,12 +26,12 @@ const Chart = ({ data: { confirmed, recovered, deaths }, country }) => {
 
   const series = [
     {
-      name: "Confirmed",
-      data: dConf,
-    },
-    {
       name: "Deaths",
       data: dDeath,
+    },
+    {
+      name: "Confirmed",
+      data: dConf,
     },
   ];
 
@@ -41,7 +41,7 @@ const Chart = ({ data: { confirmed, recovered, deaths }, country }) => {
       stacked: true,
       fontFamily: "Roboto",
     },
-    colors: ["rgba(54, 162, 235, 0.8)", "rgba(255, 99, 132, 0.8)"],
+    colors: ["rgba(255, 99, 132, 0.8)", "rgba(54, 162, 235, 0.8)"],
     dataLabels: { enabled: false },
     stroke: {
       curve: "straight",
