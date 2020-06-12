@@ -96,6 +96,7 @@ const ApxBar = ({ confirmed, recovered, deaths, country }) => {
       type="bar"
       height={650}
       width={1280}
+      style={{ fontFamily: "Roboto" }}
     />
   ) : null;
 

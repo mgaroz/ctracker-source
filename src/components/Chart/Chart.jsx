@@ -39,6 +39,7 @@ const Chart = ({ data: { confirmed, recovered, deaths }, country }) => {
     chart: {
       type: "area",
       stacked: true,
+      fontFamily: "Roboto",
     },
     colors: ["rgba(54, 162, 235, 0.8)", "rgba(255, 99, 132, 0.8)"],
     dataLabels: { enabled: false },
@@ -73,6 +74,7 @@ const Chart = ({ data: { confirmed, recovered, deaths }, country }) => {
       type="area"
       height={650}
       width={1280}
+      style={{ fontFamily: "Roboto" }}
     />
   ) : null;
 
