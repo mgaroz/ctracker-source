@@ -23,7 +23,6 @@ const ApxBar = ({ confirmed, recovered, deaths, country }) => {
   const options = {
     chart: {
       type: "bar",
-      height: 350,
     },
     colors: [
       "rgba(54, 162, 235, 0.6)",
@@ -67,6 +66,19 @@ const ApxBar = ({ confirmed, recovered, deaths, country }) => {
       horizontalAlign: "left",
       offsetX: 40,
     },
+    responsive: [
+      {
+        breakpoint: 450,
+        options: {
+          chart: {
+            height: 350,
+          },
+        },
+        legend: {
+          position: "bottom",
+        },
+      },
+    ],
     title: {
       text: `Current state in ${country}`,
       position: "top",
@@ -74,7 +86,7 @@ const ApxBar = ({ confirmed, recovered, deaths, country }) => {
       style: {
         color: "#000",
         fontWeight: 400,
-        fontSize: "22px",
+        fontSize: "20px",
         fontFamily: "Roboto",
       },
     },
@@ -89,18 +101,20 @@ const ApxBar = ({ confirmed, recovered, deaths, country }) => {
     },
   };
 
-  const mahBar = country ? (
+  const apxBar = country ? (
     <ReactApexChart
       options={options}
       series={series}
       type="bar"
-      height={650}
-      width={1280}
-      style={{ fontFamily: "Roboto" }}
+      //height={415}
+      //height={650}
+      height="100%"
+      // width={1280}
+      style={{ fontFamily: "Roboto", width: "80%" }}
     />
   ) : null;
 
-  return <Fragment>{mahBar}</Fragment>;
+  return <Fragment>{apxBar}</Fragment>;
 };
 
 export default ApxBar;

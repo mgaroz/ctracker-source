@@ -2,11 +2,19 @@
   display: flex;
   justify-content: center;
   width: 85%;
-  margin-bottom: 30px;
+  /* margin-bottom: 30px; */
+  height: 675px;
 }
 
 @media (max-width: 770px) {
   .container {
+    width: 100%;
+  }
+}
+
+@media (max-width: 450px) {
+  .container {
+    height: 360px;
     width: 100%;
   }
 }

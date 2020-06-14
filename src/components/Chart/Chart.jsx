@@ -57,6 +57,19 @@ const Chart = ({ data: { confirmed, recovered, deaths }, country }) => {
       position: "top",
       horizontalAlign: "left",
     },
+    responsive: [
+      {
+        breakpoint: 450,
+        options: {
+          chart: {
+            height: 300,
+          },
+        },
+        legend: {
+          position: "bottom",
+        },
+      },
+    ],
     xaxis: {
       type: "datetime",
     },
@@ -67,14 +80,15 @@ const Chart = ({ data: { confirmed, recovered, deaths }, country }) => {
     },
   };
 
-  const mahChart = dailyData.length ? (
+  const apxChart = dailyData.length ? (
     <ReactApexChart
       options={options}
       series={series}
       type="area"
-      height={650}
-      width={1280}
-      style={{ fontFamily: "Roboto" }}
+      //height={415}
+      height="100%"
+      //width={1280}
+      style={{ fontFamily: "Roboto", width: "80%" }}
     />
   ) : null;
 
@@ -88,7 +102,7 @@ const Chart = ({ data: { confirmed, recovered, deaths }, country }) => {
           country={country}
         />
       ) : (
-        mahChart
+        apxChart
       )}
     </div>
   );
